@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+	</head>
+
+	<body>
+
+		<div id="app">
+
+			<input type="text" v-model="title" @keyup.enter="addToDo" />
+		
+			
+			
+			<ul class="todo">
+				<li v-for="(item,index) in todo" :class="{'deleted':item.deleted}"> 
+					<input type="checkbox" @click="finish(index)" /> 
+					<span v-text="item.title"></span> 
+				</li>
+			</ul>
+			<p>已完成</p>
+			<ul class="finish">
+				<li v-for="(item,index) in finished"><span v-text="item.title"></span> </li>
+			</ul>
+		</div>
+
+		<script type="text/javascript" src="js/vue.js"></script>
+
+		<script type="text/javascript">
+			var app = new Vue({
+
+				el: "#app",
+				data: {
+					title: '张云雷',
+					todo: [{
+						title: '看相声',
+						deleted: false,
+						finished: false,
+					}, {
+						title: '听相声',
+						deleted: false,
+						finished: false,
+					}],
+					finished: []
+				},
+				methods: {
+					addToDo: function() {
+						var td = {
+							title: this.title,
+							deleted: false,
+							finished: false,
+						};
+						this.todo.push(td);
+						this.title = '';
+					},
+					
+					finish: function(index) {
+						this.finished.push(this.todo[index]);
+						this.todo.splice(index, 1);
+					}
+				}
+
+			});
+		</script>
+
+	</body>
+
+</html>
